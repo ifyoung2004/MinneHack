@@ -1,0 +1,57 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Website Website</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand">
+    <link rel="stylesheet" href="./../static/styles.css">
+
+    <style>
+        body {
+            margin:0;
+            display:flex;
+            height:100vh;
+            align-items:center;
+        }
+        .container {
+            width: 85vw;
+            margin: 0 auto;
+            overflow: auto;
+            text-align: center;
+            background: red;
+            padding: 5px;
+        }
+        .option {
+            background: blue;
+            padding: 5px;
+            margin: 2px;
+        }
+    </style>
+    <script>
+        function trigger(option) {
+            console.log("triggered " + option);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="flavortext">
+            <span id="character">{{character}}</span>: 
+            {{quote}}
+        </div>
+        <div class="option" onclick="trigger(1)">
+            option 1
+        </div>
+        <div class="option" onclick="trigger(2)">
+            option 2
+        </div>
+        <div class="option" onclick="trigger(3)">
+            option 3
+        </div>
+    </div>
+</body>
+
+</html>
