@@ -57,7 +57,7 @@
 
     <div class="overlay" id="overlay">
         <div class="popup">
-            <h2>Maze Game</h2>
+            <h2>Reroute Power to Win</h2>
             <canvas id="gameCanvas" width="400" height="400"></canvas>
         </div>
     </div>
@@ -77,7 +77,7 @@
         [1,0,1,0,0,0,0,1,0,1],
         [1,0,1,1,1,1,0,1,0,1],
         [1,0,0,0,0,1,0,1,0,1],
-        [1,1,1,1,0,1,0,1,0,1],
+        [1,1,0,1,0,1,0,1,0,1],
         [1,0,0,1,0,0,0,1,0,1],
         [1,0,1,1,1,1,0,0,0,1],
         [1,1,1,1,1,1,1,1,1,1]
@@ -132,7 +132,7 @@
         }
 
         // Goal
-        ctx.fillStyle = "green";
+        ctx.fillStyle = "yellow";
         ctx.fillRect(goal.x * tileSize, goal.y * tileSize, tileSize, tileSize);
 
         // Player
@@ -155,6 +155,18 @@
 
         if (player.x === goal.x && player.y === goal.y) {
             window.location.replace("success");
+            filled = [
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+            ]
             player = { x: 1, y: 1 };
         }
 
