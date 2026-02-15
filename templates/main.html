@@ -6,8 +6,10 @@
   
     <title>Website Website</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./../static/styles.css">
     <script src="static/main.js"></script>
+
   </head>
   
   <body>
@@ -16,6 +18,61 @@
     <p> I don't think I know who you are. Could you throw a <pre>?userName=something</pre> at the end of the old url there for me? </p>
     {% endif %}
     <button id="tester">test</button>
+
+    <div id="inventory">
+  <h3>Inventory</h3>
+  <ul id="inventory-list">
+    <!-- Removed parts will appear here -->
+  </ul>
+</div>
+    <div class="popup" id="button1" >Click me!
+      <div class="popuptext" id="myPopup" >
+        <div class="sprite-area" id="sprite-area">
+          <img src="robot_sad.png" id="robot_sad">
+        </div>
+        
+        <div class="menu-bar" id="menu-bar">
+          <div class="left-panel">
+            <div class="dialogue" id="dialogue">
+              <em>This robot looks a little down... Maybe some sunlight
+              will help them feel better!</em>
+            </div>
+
+            <div class="buttons">
+              <button class="remove_part" id="remove_part">
+              Remove Part
+              </button>
+            <button class="install_part" id="install_part">
+              Install Part
+            </button>
+            </div>
+            
+          </div>
+          <div class="info" id="info">
+            <div class="stats" id="stats">
+              <strong>Status</strong>
+                <ul>
+                  Energy
+                </ul>
+                <ul>
+                  Computing Power
+                </ul>
+            </div>
+            <div class="parts" id="parts">
+              <strong>Parts</strong>
+              <ul data-part="solar-panels">Solar Panels</ul>
+              <ul data-part="water-filtration">Water Filtration</ul>
+              <ul data-part="solar-battery">Solar Battery</ul>
+            </div>
+        </div>
+        </div>
+        <div class="close-btn" id="close-btn" onclick="closePopup()">
+            <i class="fa-solid fa-x"></i>
+        </div>
+
+      </div>
+    </div>
+    <script src="/static/main.js"> </script>
     
   </body>
   </html>

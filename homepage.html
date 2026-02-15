@@ -2,6 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="homepage.css">
+  
   <style>
   .robotButton1 {
     position: absolute;
@@ -34,6 +35,12 @@
 <body>
 
   <h1>Robot Game :]</h1>
+  <div id="inventory">
+  <h3>Inventory</h3>
+  <ul id="inventory-list">
+    <!-- Removed parts will appear here -->
+  </ul>
+</div>
 
   <button class = "robotButton1" onclick="openMaze()">
       <img src="images/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
@@ -56,10 +63,55 @@
   </button>
 
   <div id="robotPopup" class="popup">
-    <div class="popup-content">
+    <div class="popuptext" id="myPopup" >
+        <div class="sprite-area" id="sprite-area">
+          <img src="robot_sad.png" id="robot_sad">
+        </div>
+        
+        <div class="menu-bar" id="menu-bar">
+          <div class="left-panel">
+            <div class="dialogue" id="dialogue">
+              <em>This robot looks a little down... Maybe some sunlight
+              will help them feel better!</em>
+            </div>
+
+            <div class="buttons">
+              <button class="remove_part" id="remove_part">
+              Remove Part
+              </button>
+            <button class="install_part" id="install_part">
+              Install Part
+            </button>
+            </div>
+            
+          </div>
+          <div class="info" id="info">
+            <div class="stats" id="stats">
+              <strong>Status</strong>
+                <ul>
+                  Energy
+                </ul>
+                <ul>
+                  Computing Power
+                </ul>
+            </div>
+            <div class="parts" id="parts">
+              <strong>Parts</strong>
+              <ul data-part="solar-panels">Solar Panels</ul>
+              <ul data-part="water-filtration">Water Filtration</ul>
+              <ul data-part="solar-battery">Solar Battery</ul>
+            </div>
+        </div>
+        </div>
+        <div class="close-btn" id="close-btn" onclick="closePopup()">
+          <span class="close" onclick="closePopup()">&times;</span>
+            <i class="fa-solid fa-x"></i>
+        </div>
+
+      </div>
+    
       <span class="close" onclick="closePopup()">&times;</span>
-      <h2>Popup Title</h2>
-      <p>Some content in the popup.</p>
+      
     </div>
   </div>
 
