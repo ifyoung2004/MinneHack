@@ -1,50 +1,78 @@
-<!doctype html>
+ <!doctype html>
+  
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+  
+    <title>Website Website</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./../static/styles.css">
+    <script src="static/main.js"></script>
 
-<html lang="en">
+  </head>
+  
+  <body>
+    <h1>HELLO {{user}}</h1>
+    {% if user == "unknown" %}
+    <p> I don't think I know who you are. Could you throw a <pre>?userName=something</pre> at the end of the old url there for me? </p>
+    {% endif %}
+    <button id="tester">test</button>
 
-<head>
-  <meta charset="utf-8">
-  <title>Website Website</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand">
-  <link rel="stylesheet" href="./../static/styles.css">
+    <div id="inventory">
+  <h3>Inventory</h3>
+  <ul id="inventory-list">
+    <!-- Removed parts will appear here -->
+  </ul>
+</div>
+    <div class="popup" id="button1" >Click me!
+      <div class="popuptext" id="myPopup" >
+        <div class="sprite-area" id="sprite-area">
+          <img src="robot_sad.png" id="robot_sad">
+        </div>
+        
+        <div class="menu-bar" id="menu-bar">
+          <div class="left-panel">
+            <div class="dialogue" id="dialogue">
+              <em>This robot looks a little down... Maybe some sunlight
+              will help them feel better!</em>
+            </div>
 
-  <script>
-    function trigger(option) {
-      console.log("test");
-      const minigames = ["match-template", "maze-template", "popit-template"];
-      const randomMinigame = minigames[Math.floor(Math.random() * minigames.length)];
-      console.log(randomMinigame);
+            <div class="buttons">
+              <button class="remove_part" id="remove_part">
+              Remove Part
+              </button>
+            <button class="install_part" id="install_part">
+              Install Part
+            </button>
+            </div>
+            
+          </div>
+          <div class="info" id="info">
+            <div class="stats" id="stats">
+              <strong>Status</strong>
+                <ul>
+                  Energy
+                </ul>
+                <ul>
+                  Computing Power
+                </ul>
+            </div>
+            <div class="parts" id="parts">
+              <strong>Parts</strong>
+              <ul data-part="solar-panels">Solar Panels</ul>
+              <ul data-part="water-filtration">Water Filtration</ul>
+              <ul data-part="solar-battery">Solar Battery</ul>
+            </div>
+        </div>
+        </div>
+        <div class="close-btn" id="close-btn" onclick="closePopup()">
+            <i class="fa-solid fa-x"></i>
+        </div>
 
-      console.log("triggered " + option);
-      if (option === "minigame") {
-        document.getElementById("minigame").classList.add("active");
-        const template = document.getElementById(randomMinigame);
-        const clone = template.content.cloneNode(true);
-
-        const container = document.getElementById("minigame");
-        container.innerHTML = "";
-        container.appendChild(clone);
-      } else {
-        window.location.href = `/?action=${option}`
-      }
-    }
-  </script>
-</head>
-
-<body>
-    {% with gamestate=gamestate %}
-		{% include "chooseEvent.html" %}
-    {% endwith %}
-  <div id="minigame"></div>
-  <template id="match-template">
-    {% include "minigameMatch.html" %}
-  </template>
-  <template id="maze-template">
-    {% include "minigameMaze.html" %}
-  </template>
-  <template id="popit-template">
-    {% include "minigamePopit.html" %}
-  </template>
-</body>
-
-</html>
+      </div>
+    </div>
+    <script src="/static/main.js"> </script>
+    
+  </body>
+  </html>

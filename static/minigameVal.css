@@ -1,0 +1,43 @@
+body {
+    background-color: rgb(255, 235, 238);
+}
+
+#div1 {
+  width: 100px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#div2 {
+    width: 100px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#div3 {
+    width: 100px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+#div4 {
+    width: 100px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid black;
+    
+}
+
+.partners {
+     position: absolute;
+    right: 100px;
+    top: 10;   
+    
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
