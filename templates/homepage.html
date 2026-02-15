@@ -1,117 +1,101 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <link rel="stylesheet" href="./../static/homepage.css">
-  
+
   <style>
-  .robotButton1 {
-    position: absolute;
-    top: 200px;
-    left: 200px;
-  }
-  .robotButton2 {
-    position: absolute;
-    top: 500px;
-    left: 200px;
-  }
-  .robotButton3 {
-    position: absolute;
-    top: 200px;
-    left: 500px;
-  }
-  .robotButton4 {
-    position: absolute;
-    top: 500px;
-    left: 500px;
-  }
-  .robotButton5 {
-    position: absolute;
-    top: 200px;
-    left: 800px;
-  }
+    .robot-button-image {
+      width: 100px;
+      height: 100px
+    }
+
+    #robot-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 5rem;
+      height: 50vh;
+    }
   </style>
   <title>ROBOTS</title>
 </head>
+
 <body>
 
   <h1>Robot Game :]</h1>
   <div id="inventory">
-  <h3>Inventory</h3>
-  <ul id="inventory-list">
-    <!-- Removed parts will appear here -->
-  </ul>
-</div>
+    <h3>Inventory</h3>
+    <ul id="inventory-list">
+      <!-- Removed parts will appear here -->
+    </ul>
+  </div>
 
-  <button class = "robotButton1" onclick="openRobotPopup(1)">
-      <img src="./../static/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
-  </button>
+  <div id="robot-grid">
 
-  <button class = "robotButton2" onclick="openRobotPopup(2)">
-      <img src="./../static/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
-  </button>
 
-  <button class = "robotButton3" onclick="openRobotPopup(3)">
-      <img src="./../static/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
-  </button>
+    <button onclick="openRobotPopup(1)">
+      <img class="robot-button-image" src="./../static/robot-placeholder.png" alt="Robot">
+    </button>
 
-  <button class = "robotButton4" onclick="openRobotPopup(4)">
-      <img src="./../static/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
-  </button>
+    <button onclick="openRobotPopup(2)">
+      <img class="robot-button-image" src="./../static/robot-placeholder.png" alt="Robot">
+    </button>
 
-  <button class = "robotButton5" onclick="openRobotPopup(5)">
-      <img src="./../static/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
-  </button>
+    <button onclick="openRobotPopup(3)">
+      <img class="robot-button-image" src="./../static/robot-placeholder.png" alt="Robot">
+    </button>
+
+    <button onclick="openRobotPopup(4)">
+      <img class="robot-button-image" src="./../static/robot-placeholder.png" alt="Robot">
+    </button>
+
+  </div>
 
   <div id="robotPopup" class="popup">
-    <div class="popuptext" id="myPopup" >
-        <div class="sprite-area" id="sprite-area">
-          <img src="./../static/robot_sad.png" id="robot_sad">
-        </div>
-        
-        <div class="menu-bar" id="menu-bar">
-          <div class="left-panel">
-            <div class="dialogue" id="dialogue">
-              <em>This robot looks a little down... Maybe some sunlight
-              will help them feel better!</em>
-            </div>
+    <div class="popuptext" id="myPopup">
+      <div class="sprite-area" id="sprite-area">
+        <img src="./../static/robot_sad.png" id="robot_sad">
+      </div>
 
-            <div class="buttons">
-              <button class="remove_part" id="remove_part">
+      <div class="menu-bar" id="menu-bar">
+        <div class="left-panel">
+          <div class="dialogue" id="dialogue">
+            <em>This robot looks a little down... Maybe some sunlight
+              will help them feel better!</em>
+          </div>
+
+          <div class="buttons">
+            <button class="remove_part" id="remove_part">
               Remove Part
-              </button>
+            </button>
             <button class="install_part" id="install_part">
               Install Part
             </button>
-            </div>
-            
           </div>
-          <div class="info" id="info">
-            <div class="stats" id="stats">
-              <strong>Status</strong>
-                <ul>
-                  Energy
-                </ul>
-                <ul>
-                  Computing Power
-                </ul>
-            </div>
-            <div class="parts" id="parts">
-              <strong>Parts</strong>
-              <ul data-part="solar-panels">Solar Panels</ul>
-              <ul data-part="water-filtration">Water Filtration</ul>
-              <ul data-part="solar-battery">Solar Battery</ul>
-            </div>
+
         </div>
+        <div class="info" id="info">
+          <div class="parts" id="parts">
+            <strong>Parts</strong>
+            <ul>
+              <li data-part="solar-panels">Solar Panels</li>
+              <li data-part="water-filtration">Water Filtration</li>
+              <li data-part="solar-battery">Solar Battery</li>
+            </ul>
+          </div>
+
         </div>
         <div class="close-btn" id="close-btn" onclick="closePopup()">
           <span class="close" onclick="closePopup()">&times;</span>
-            <i class="fa-solid fa-x"></i>
+          <i class="fa-solid fa-x"></i>
         </div>
 
       </div>
-    
-      <span class="close" onclick="closePopup()">&times;</span>
-      
+
+
+
     </div>
   </div>
 
@@ -124,7 +108,7 @@
   </div>
 
   <div id="minigame"></div>
-  
+
 
   <template id="match-template">
     {% include "minigameMatch.html" %}
@@ -133,7 +117,7 @@
     {% include "minigameMaze.html" %}
   </template>
   <template id="popit-template">
-    {% include "minigamePopit.html" %}
+    {% include "minigamePopIt.html" %}
   </template>
   <template id="val-template">
     {% include "minigameVal.html" %}
@@ -143,4 +127,5 @@
   </template>
   <script src="./../static/homepage.js"></script>
 </body>
+
 </html>

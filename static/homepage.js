@@ -1,119 +1,27 @@
 function openPopup() {
-  var popup = document.getElementById("robotPopup");
-  popup.style.display = "flex";
+  document.getElementById("robotPopup").style.display = "flex";
 }
 
-// function openMaze() {
-//   var popup = document.getElementById("mazePopup");
-//   popup.style.display = "flex";
-// }
-
 function closePopup() {
-  var popup = document.getElementById("robotPopup");
-  popup.style.display = "none";
+  document.getElementById("robotPopup").style.display = "none";
 }
 
 function closeIntro() {
-  var popup = document.getElementById("introPopup");
-  popup.style.display = "none";
+  document.getElementById("introPopup").style.display = "none";
 }
 
-// window.onclick = function(event) {
-//   if (event.target == popup) {
-//     closePopup();
-//   }
-// }
-
-
-
-let robotParts = [];
-let inventory = [];
 let fixedRobots = 0;
-
-
-
-
-let selectedPart = null; // currently selected part
-let selectedFromInventory = false; 
+let selectedPart = null;
+let selectedFromInventory = false;
 
 const partsList = document.getElementById("parts");
 const inventoryList = document.getElementById("inventory-list");
-
 const removeBtn = document.getElementById("remove_part");
 const installBtn = document.getElementById("install_part");
 
-// Handle selection in robot parts
-partsList.addEventListener("click", (e) => {
-    if (e.target.tagName === "UL") {
-        clearSelection();
-        selectedPart = e.target;
-        selectedFromInventory = false;
-        selectedPart.classList.add("selected");
-    }
-});
-
-// Inventory selection
-inventoryList.addEventListener("click", (e) => {
-    if (e.target.tagName === "UL") {
-        clearSelection();
-        selectedPart = e.target;
-        selectedFromInventory = true;
-        selectedPart.classList.add("selected");
-    }
-});
-
-// Remove part
-removeBtn.addEventListener("click", () => {
-    if (selectedPart && !selectedFromInventory) {
-
-        const partName = selectedPart.dataset.part;
-        const robot = robots.find(r => r.id === currentRobotId);
-
-        // Remove from robot data
-        robot.parts = robot.parts.filter(p => p !== partName);
-
-        // Move in DOM
-        partsList.removeChild(selectedPart);
-        inventoryList.appendChild(selectedPart);
-
-        clearSelection();
-    } else {
-        alert("Please select a part from the robot to remove!");
-    }
-});
-
-
-// Install part
-installBtn.addEventListener("click", () => {
-    if (selectedPart && selectedFromInventory) {
-
-        const partName = selectedPart.dataset.part;
-        const robot = robots.find(r => r.id === currentRobotId);
-
-        
-        if (!robot.parts.includes(partName)) {
-            robot.parts.push(partName);
-        }
-        inventoryList.removeChild(selectedPart);
-        partsList.appendChild(selectedPart);
-
-        clearSelection();
-        checkWinCondition(); 
-
-    } else {
-        alert("Please select a part from the inventory to install!");
-    }
-});
-
-
-// Helper function to clear selection
-function clearSelection() {
-    const allParts = document.querySelectorAll("ul");
-    allParts.forEach(part => part.classList.remove("selected"));
-    selectedPart = null;
-    selectedFromInventory = false;
-}
-
+let lastRobotId = null;
+let lastPartName = "";
+let lastPartElement = null;
 
 const robots = [
   {
@@ -128,7 +36,7 @@ const robots = [
   {
     id: 2,
     name: "Robot 2",
-    dialogue: "'s water filtration system is broken! Getting some water would really help them feel better...",
+    dialogue: "'s water filtration system is broken!",
     energy: 50,
     computingPower: 70,
     parts: ["solar-panels"],
@@ -137,7 +45,7 @@ const robots = [
   {
     id: 3,
     name: "Robot 3",
-    dialogue: "'s oxygen processing system is not working properly... They could really use some fresh air.",
+    dialogue: "'s oxygen processing system is not working properly...",
     energy: 60,
     computingPower: 60,
     parts: ["solar-panels", "thermal-paste"],
@@ -146,108 +54,178 @@ const robots = [
   {
     id: 4,
     name: "Robot 4",
-    dialogue: "'s thermal paste is dried out... Help them cool down!!",
+    dialogue: "'s thermal paste is dried out...",
     energy: 40,
     computingPower: 80,
     parts: ["battery"],
     img: "./../static/robot_sad.png"
-  },
-  {
-    id: 5,
-    name: "Robot 5",
-    dialogue: "looks a little low energy... Maybe they need a new battery?",
-    energy: 30,
-    computingPower: 50,
-    parts: ["solar-panels", "water-filtration"],
-    img: "./../static/robot_sad.png"
   }
 ];
 
-
 let currentRobotId = null;
 
+/* --------------------------
+   SELECTION HANDLING
+-------------------------- */
 
+function clearSelection() {
+  document.querySelectorAll("li.selected")
+    .forEach(li => li.classList.remove("selected"));
+
+  selectedPart = null;
+  selectedFromInventory = false;
+}
+
+partsList.addEventListener("click", (e) => {
+  if (e.target.tagName === "LI") {
+    clearSelection();
+    selectedPart = e.target;
+    selectedFromInventory = false;
+    e.target.classList.add("selected");
+  }
+});
+
+inventoryList.addEventListener("click", (e) => {
+  if (e.target.tagName === "LI") {
+    clearSelection();
+    selectedPart = e.target;
+    selectedFromInventory = true;
+    e.target.classList.add("selected");
+  }
+});
+
+/* --------------------------
+   ROBOT POPUP
+-------------------------- */
 
 function openRobotPopup(robotId) {
   currentRobotId = robotId;
   const robot = robots.find(r => r.id === robotId);
 
-  // Show popup
-  const popup = document.getElementById("robotPopup");
-  popup.style.display = "block";
+  openPopup();
 
-  // Update robot image
-  const img = document.getElementById("robot_sad");
-  img.src = robot.img;
+  document.getElementById("robot_sad").src = robot.img;
+  document.getElementById("dialogue").innerHTML =
+    `<em>${robot.name}${robot.dialogue}</em>`;
 
-  // Update dialogue
-  document.getElementById("dialogue").innerHTML = `<em>${robot.name} ${robot.dialogue}`;
+  // Clear current parts list
+  partsList.innerHTML = "";
 
-  // Update stats
-  document.getElementById("stats").innerHTML = `
-    <strong>Status</strong>
-    <ul>Energy: ${robot.energy}</ul>
-    <ul>Computing Power: ${robot.computingPower}</ul>
-  `;
-
-  // Update parts
-  const partsDiv = document.getElementById("parts");
-  let partsHTML = "<strong>Parts</strong>";
   robot.parts.forEach(part => {
-    partsHTML += `<ul data-part="${part}">${part.replace("-", " ")}</ul>`;
+    const li = document.createElement("li");
+    li.dataset.part = part;
+    li.textContent = part.replace("-", " ");
+    partsList.appendChild(li);
   });
-  partsDiv.innerHTML = partsHTML;
 }
 
+/* --------------------------
+   REMOVE PART
+-------------------------- */
+
+removeBtn.addEventListener("click", () => {
+  if (!selectedPart || selectedFromInventory) {
+    alert("Select a robot part to remove!");
+    return;
+  }
+
+  const robot = robots.find(r => r.id === currentRobotId);
+  const partName = selectedPart.dataset.part;
+
+  robot.parts = robot.parts.filter(p => p !== partName);
+
+  inventoryList.appendChild(selectedPart);
+  clearSelection();
+});
+
+/* --------------------------
+   INSTALL PART
+-------------------------- */
+
+installBtn.addEventListener("click", async () => {
+  if (!selectedPart || !selectedFromInventory) {
+    alert("Select a part from inventory!");
+    return;
+  }
+
+  const robot = robots.find(r => r.id === currentRobotId);
+
+  lastRobotId = robot.id;
+  lastPartName = selectedPart.dataset.part;
+  lastPartElement = selectedPart;
+
+  await checkWinCondition();
+});
+
+/* --------------------------
+   MINIGAMES
+-------------------------- */
+
+const minigameList = ["hi", "maze", "popit", "match"];
+
 async function triggerMinigame(minigame) {
-  document.getElementById("minigame").classList.add("active");
+  const container = document.getElementById("minigame");
+  container.classList.add("active");
+
   const template = document.getElementById(`${minigame}-template`);
   const clone = template.content.cloneNode(true);
 
-  const container = document.getElementById("minigame");
   container.innerHTML = "";
   container.appendChild(clone);
 }
 
-function hideMinigame() {
-  document.getElementById("minigame").classList.remove("active");
+function hideMinigame(win = true) {
+  const container = document.getElementById("minigame");
+  container.classList.remove("active");
+  container.innerHTML = "";
+
+  if (!win) {
+    openRobotPopup(lastRobotId);
+    return;
+  }
+
+  fixedRobots++;
+
+  const robot = robots.find(r => r.id === lastRobotId);
+  robot.img = "static/robot_happy.png";
+
+  if (!robot.parts.includes(lastPartName)) {
+    robot.parts.push(lastPartName);
+  }
+
+  partsList.appendChild(lastPartElement);
+  inventoryList.removeChild(lastPartElement);
+
+  clearSelection();
+  openRobotPopup(lastRobotId);
+
+  if (fixedRobots >= robots.length) {
+    alert("You fixed all robots!");
+  }
+}
+
+async function activateRandomMinigame() {
+  if (minigameList.length === 0) {
+    alert("No more minigames!");
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * minigameList.length);
+  const game = minigameList.splice(randomIndex, 1)[0];
+
+  closePopup();
+  await triggerMinigame(game);
 }
 
 async function checkWinCondition() {
-    let fixedRobots = 0;
-
-    if (robots.find(r => r.id === 1).parts.includes("solar-panels")) {
-      await triggerMinigame("hi");
-      robots.find(r => r.id === 1).img = "./../static/robot_happy.png";
-      openRobotPopup(currentRobotId);
-      fixedRobots++;
-    }
-    if (robots.find(r => r.id === 2).parts.includes("water-filtration")) {
-      await triggerMinigame("val");
-       fixedRobots++;
-       robots.find(r => r.id === 2).img = "./../static/robot_happy.png";
-      openRobotPopup(currentRobotId);
-    }
-    if (robots.find(r => r.id === 3).parts.includes("oxygen-processor")) {
-      await triggerMinigame("maze");
-      fixedRobots++;
-      robots.find(r => r.id === 3).img = "./../static/robot_happy.png";
-      openRobotPopup(currentRobotId);
-    }
-    if (robots.find(r => r.id === 4).parts.includes("thermal-paste")) {
-      await triggerMinigame("popit");
-      fixedRobots++;
-      robots.find(r => r.id === 4).img = "./../static/robot_happy.png";
-      openRobotPopup(currentRobotId);
-    }
-    if (robots.find(r => r.id === 5).parts.includes("battery")) {
-      await triggerMinigame("match");
-      fixedRobots++;
-      robots.find(r => r.id === 5).img = "./../static/robot_happy.png";
-      openRobotPopup(currentRobotId);
-    }
-
-    if (fixedRobots === 5) {
-        alert("Win");
-    }
+  if (
+    (lastRobotId === 1 && lastPartName === "solar-panels") ||
+    (lastRobotId === 2 && lastPartName === "water-filtration") ||
+    (lastRobotId === 3 && lastPartName === "oxygen-processor") ||
+    (lastRobotId === 4 && lastPartName === "thermal-paste")
+  ) {
+    await activateRandomMinigame();
+  } else {
+    alert("That doesn't seem like the right part.");
+  }
 }

@@ -50,7 +50,7 @@ body {
     right: 10px;
     color: #365563;
     cursor: pointer;
-    z-index: 3;
+    z-index: 99999;
 }
 
 .dialogue {
@@ -198,7 +198,7 @@ ul {
     padding: 5px;
 
     display: none;
-    z-index: 1000;
+    z-index: 5;
 }
 
 #minigame.active {

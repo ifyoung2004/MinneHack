@@ -1,21 +1,8 @@
 {% extends "minigameTemplate.html" %}
 
 {% block minigame %}
-<head>
+
     <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            background: #1a1a1a;
-            color: white;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
         .overlay {
             position: fixed;
             top: 0;
@@ -48,21 +35,16 @@
             border: 3px solid white;
         }
     </style>
-    <script>
-    </script>
-</head>
 
-<body>
-    <button onclick="openPopup()">Play Maze</button>
 
-    <div class="overlay" id="overlay">
-        <div class="popup">
-            <h2>Reroute Power to Win</h2>
-            <canvas id="gameCanvas" width="400" height="400"></canvas>
-        </div>
+<div class="overlay" id="overlay">
+    <div class="popup">
+        <h2>Reroute Power to Win</h2>
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
     </div>
+</div>
 
-<script>
+<script  type="module">
     const overlay = document.getElementById("overlay");
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
@@ -71,44 +53,40 @@
     let gameActive = false;
 
     const maze = [
-        [1,1,1,1,1,1,1,1,1,1],
-        [1,0,0,0,1,0,0,0,0,1],
-        [1,0,1,0,1,0,1,1,0,1],
-        [1,0,1,0,0,0,0,1,0,1],
-        [1,0,1,1,1,1,0,1,0,1],
-        [1,0,0,0,0,1,0,1,0,1],
-        [1,1,0,1,0,1,0,1,0,1],
-        [1,0,0,1,0,0,0,1,0,1],
-        [1,0,1,1,1,1,0,0,0,1],
-        [1,1,1,1,1,1,1,1,1,1]
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+        [1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
+        [1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+        [1, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 0, 1, 0, 0, 0, 1, 0, 1],
+        [1, 0, 1, 1, 1, 1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ];
 
     const filled = [
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ]
 
     let player = { x: 1, y: 1 };
     let goal = { x: 8, y: 8 };
 
     function openPopup() {
-    overlay.style.display = "flex";
-    gameActive = true;
-    drawMaze();
+        overlay.style.display = "flex";
+        gameActive = true;
+        drawMaze();
     }
 
-    function closePopup() {
-    overlay.style.display = "none";
-    gameActive = false;
-    }
 
     function drawMaze() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -181,9 +159,11 @@
             case "ArrowRight": move(1, 0); break;
         }
     });
+
+    openPopup();
 </script>
 
-</body>
+
 
 </html>
 

@@ -11,18 +11,23 @@
     #marker {
         z-index: 1;
     }
+
+    .hidden {
+        display: none
+    }
 </style>
 
 <div>Click on the key to match it with the lock!</div>
-<p id="score"></p>
+<p id="score">Press to begin the game!</p>
 
-<img id="marker" src="/static/red_marker.png" />
-<img id="target" src="/static/yellow_circle.png" />
+<img id="marker" class="hidden" src="/static/red_marker.png" />
+<img id="target" class="hidden" src="/static/yellow_circle.png" />
 
-<script>
+<script type="module">
     const marker = document.querySelector("#marker");
     const target = document.querySelector("#target");
     const scoreElem = document.querySelector("#score");
+    const minigame = document.getElementById("minigame")
 
     let percent = 0;
     let direction = 1;
@@ -31,9 +36,7 @@
 
     let targetAngle = 0;
     let initialDistance = 0;
-    let gameOver = false;
-
-    scoreElem.innerHTML = `${score} / ${targetScore}`;
+    let gameOver = true;
 
 
     function normalizeAngle(angle) {
@@ -52,10 +55,11 @@
     }
 
     function getCircleData() {
-        const usableWidth = window.innerWidth * 0.65;
-        const usableHeight = window.innerHeight * 0.7;
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
+        const container = document.getElementById("minigame");
+        const usableWidth = container.clientWidth * 0.6;
+        const usableHeight = container.clientHeight  * 0.6;
+        const centerX = container.clientWidth  / 2;
+        const centerY = container.clientHeight / 2;
         const radius = Math.min(usableWidth, usableHeight) / 2;
         return { centerX, centerY, radius };
     }
@@ -74,8 +78,8 @@
         const progress = score / targetScore;
 
 
-        const max = Math.PI * (1 - progress);
-        const min = max * 0.7;
+        const max = Math.PI * 2 * (1 - progress);
+        const min = max * 1.5;
         let distance = min + Math.random() * (max - min);
 
         targetAngle = normalizeAngle(
@@ -103,6 +107,8 @@
         direction = 1;
         gameOver = false;
         scoreElem.innerHTML = `${score} / ${targetScore}`;
+        marker.classList.remove("hidden");
+        target.classList.remove("hidden")
         placeTarget();
     }
 
@@ -138,7 +144,8 @@
         requestAnimationFrame(animate);
     }
 
-    window.addEventListener("click", () => {
+    minigame.addEventListener("click", () => {
+        console.log(gameOver)
         if (gameOver) {
             resetGame();
             return;
@@ -154,8 +161,7 @@
             direction *= -1;
 
             if (score === targetScore) {
-                scoreElem.innerHTML = "You Win!";
-                gameOver = true;
+                hideMinigame();
             } else {
                 placeTarget();
             }
@@ -164,7 +170,6 @@
         }
     });
 
-    placeTarget();
     animate();
 </script>
 

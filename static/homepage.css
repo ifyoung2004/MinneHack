@@ -1,175 +1,175 @@
-.popuptext {
-    border: 3px solid white;
-    flex-direction: column;
-    display:flex;
-  
-  background-color: #c8defa;
-  color: #000000;
-  text-align: center;
-  width: 40vw;
-  height: 80vh;
-  border-radius: 5px;
-  position:fixed;
-    top:50%;
-    left:50%;
-  transform: translate(-50%, -50%);
-  z-index:1;
-
-}
-
-#sprite-area {
-    height: 50vh;  
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-#robot_sad {
-  max-height: 100%;
-  max-width: 100%;
-}
-#menu-bar {
-    width:40vw;
-    height:30vh;
-    background-color:#779eb2;
-    z-index:1;
-    display:flex;
-    border: 3px solid white;
-    border-radius: 5px;
-    
-}
-
-#remove-part {
-    max-height:50px;
-}
-
-#close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: #365563;
-    cursor: pointer;
-    z-index: 3;
-}
-
-.dialogue {
-    align-items: center;
-}
-.buttons button {
-    background-color: #223e4c;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  cursor: pointer;
-  align-items:center;
-}
-
-#stats ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  text-align: left;
-
-}
-
-#parts ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  text-align: left;
-}
-
-#info {
-    z-index:2;
-    margin-top:auto;
-    border-left: 3px solid white;
-    border-radius:5px;
-}
-
-#stats, #parts {
-    height: 15vh;
-    width: 13vw;
-    background-color: #608da2;
-    z-index:2;
-    margin-top:auto;
-    margin-left:auto;
-}
-
+/* ================= POPUP CONTAINER ================= */
 
 .popup {
   display: none;
   position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
+/* ================= MAIN POPUP BOX ================= */
 
+.popuptext {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  max-width: 90vw;
+  max-height: 85vh;
+  background-color: #c8defa;
+  border: 3px solid white;
+  border-radius: 10px;
+  color: #000;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ================= ROBOT IMAGE AREA ================= */
+
+#sprite-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px;
+  max-height: 300px;
+}
+
+#robot_sad {
+  max-height: 250px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ================= MENU BAR ================= */
+
+#menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  background-color: #779eb2;
+  border-top: 3px solid white;
+  padding: 15px;
+  gap: 15px;
+}
+
+/* ================= LEFT PANEL ================= */
+
+.left-panel {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dialogue {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+/* ================= BUTTONS ================= */
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.buttons button {
+  background-color: #223e4c;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.buttons button:hover {
+  background-color: #1a2f39;
+}
+
+/* ================= INFO PANEL ================= */
+
+#info {
+  flex: 1;
+  min-width: 160px;
+  max-width: 200px;
+}
+
+#parts {
+  background-color: #608da2;
+  padding: 10px;
+  border-radius: 6px;
+  list-style: none;
+}
+
+#parts strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ================= LIST STYLING ================= */
+
+#parts ul,
+#inventory-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#parts li,
+#inventory-list li {
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+#parts li:hover,
+#inventory-list li:hover {
+  background-color: rgba(255,255,255,0.4);
+}
+
+/* Yellow selection highlight */
+li.selected {
+  background-color: #ffeb3b;
+}
+
+/* ================= CLOSE BUTTON ================= */
+
+#close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 24px;
+  color: #365563;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+/* ================= INTRO POPUP ================= */
 
 .intro {
   display: flex;
   position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .popup-content {
-  background-color: #fefefe;
+  background-color: #fff;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-  position: relative;
-}
-
-.mazePopup-content {
-  background-color: #fefefe;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-  position: relative;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-ul.selected {
-  background-color: #ffeb3b;
-  cursor: pointer;
-}
-ul {
-  cursor: pointer;
-  padding: 5px;
-  margin: 2px 0;
-  
-  list-style: none;
+  border-radius: 8px;
+  max-width: 400px;
+  text-align: center;
 }

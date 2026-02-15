@@ -2,18 +2,20 @@
 
 {% block minigame %}
 <div>Click on the pairs of emojis!</div>
-<script>
+<script type="module">
     function getRandomArbitrary(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
     }
 
-    items = ["❤️", "🧡", "💛", "💚", "💙", "💜", "💕", "💖", "🖤", "🤎"]
+    const items = ["❤️", "🧡", "💛", "💚", "💙", "💜", "💕", "💖", "🖤", "🤎"]
     let currentClass = "";
     let currentId = "";
     let score = 0;
+    let selected = 0;
+    const selectedIds = [];
 
     function matchTrigger(itemDiv) {
-        console.log(itemDiv);
+        document.querySelector(`#${itemDiv[1]}`).style.border = "1px solid green";
         if (currentClass == itemDiv[0] && currentId != itemDiv[1]) {
             document.querySelectorAll(`.${itemDiv[0]}`).forEach(e => e.remove());
             score++;
@@ -21,8 +23,17 @@
                 hideMinigame()
             }
         }
+        if (selectedIds.length > 1) {
+            const elem = document.querySelector(`#${selectedIds[0]}`);
+            if (elem !== null) {
+                elem.style.border = "none";
+            }
+            selectedIds.shift();
+        }
         currentClass = itemDiv[0];
         currentId = itemDiv[1];
+        selectedIds.push(currentId);
+
     }
 
 
@@ -40,12 +51,12 @@
             itemDiv.style.position = "absolute";
             itemDiv.style.fontSize = "40px";
             itemDiv.classList.add(item);
-            itemDiv.id = item+i;
+            itemDiv.id = item + i;
             itemDiv.style.left = getRandomArbitrary(5, 95) + "%";
             itemDiv.style.top = getRandomArbitrary(5, 95) + "%";
             itemDiv.onclick = () => matchTrigger([itemDiv.classList[0], itemDiv.id]);
             element.appendChild(itemDiv);
-        }  
+        }
     }
 </script>
 {% endblock %}
