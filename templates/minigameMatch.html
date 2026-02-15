@@ -1,0 +1,51 @@
+{% extends "minigameTemplate.html" %}
+
+{% block minigame %}
+<div>Click on the pairs of emojis!</div>
+<script>
+    function getRandomArbitrary(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    items = ["❤️", "🧡", "💛", "💚", "💙", "💜", "💕", "💖", "🖤", "🤎"]
+    let currentClass = "";
+    let currentId = "";
+    let score = 0;
+
+    function matchTrigger(itemDiv) {
+        console.log(itemDiv);
+        if (currentClass == itemDiv[0] && currentId != itemDiv[1]) {
+            document.querySelectorAll(`.${itemDiv[0]}`).forEach(e => e.remove());
+            score++;
+            if (score == items.length) {
+                window.location.replace("success");
+            }
+        }
+        currentClass = itemDiv[0];
+        currentId = itemDiv[1];
+    }
+
+
+    const element = document.getElementById('minigameWindow');
+    const rect = element.getBoundingClientRect();
+
+    console.log('Top position (Y):', rect.top);
+    console.log('Bottom', rect.bottom);
+    console.log('Left position (X):', rect.left);
+    console.log('Right:', rect.right);
+    for (const item of items) {
+        for (let i = 0; i < 2; i++) {
+            const itemDiv = document.createElement("div");
+            itemDiv.innerHTML = item;
+            itemDiv.style.position = "absolute";
+            itemDiv.style.fontSize = "40px";
+            itemDiv.classList.add(item);
+            itemDiv.id = item+i;
+            itemDiv.style.left = getRandomArbitrary(5, 95) + "%";
+            itemDiv.style.top = getRandomArbitrary(5, 95) + "%";
+            itemDiv.onclick = () => matchTrigger([itemDiv.classList[0], itemDiv.id]);
+            element.appendChild(itemDiv);
+        }  
+    }
+</script>
+{% endblock %}

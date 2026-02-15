@@ -28,10 +28,39 @@
             padding: 5px;
             margin: 2px;
         }
+        #minigame {
+            width: 65vw;
+            height: 70vh;
+
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            border: 3px solid white;
+            background-color: black;
+            padding: 5px;
+
+            display: none;
+            z-index: 1000;
+        }
+
+        #minigame.active {
+            display: block;
+        }
     </style>
     <script>
         function trigger(option) {
             console.log("triggered " + option);
+            if (option === "minigame") {
+                document.getElementById("minigame").classList.add("active");
+                const template = document.getElementById("minigame-template");
+                const clone = template.content.cloneNode(true);
+
+                const container = document.getElementById("minigame");
+                container.innerHTML = "";
+                container.appendChild(clone);
+            }
         }
     </script>
 </head>
@@ -42,16 +71,17 @@
             <span id="character">{{character}}</span>: 
             {{quote}}
         </div>
-        <div class="option" onclick="trigger(1)">
-            option 1
-        </div>
-        <div class="option" onclick="trigger(2)">
-            option 2
-        </div>
-        <div class="option" onclick="trigger(3)">
-            option 3
-        </div>
+        {% for option in options %}
+            <div class="option" onclick="trigger('{{option.option}}')">
+                {{option.text}}
+            </div>
+        {% endfor %}
     </div>
+    <div id="minigame">
+    </div>
+    <template id="minigame-template">
+        {% include "minigameMatch.html" %}
+    </template>
 </body>
 
 </html>
