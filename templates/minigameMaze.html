@@ -1,13 +1,7 @@
-<!doctype html>
+{% extends "minigameTemplate.html" %}
 
-<html lang="en">
-
+{% block minigame %}
 <head>
-    <meta charset="utf-8">
-    <title>Maze</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand">
-    <link rel="stylesheet" href="./../static/styles.css">
-
     <style>
         body {
             font-family: Arial;
@@ -22,7 +16,6 @@
             cursor: pointer;
         }
 
-        /* Popup Overlay */
         .overlay {
             position: fixed;
             top: 0;
@@ -161,6 +154,7 @@
         }
 
         if (player.x === goal.x && player.y === goal.y) {
+            window.location.replace("success");
             player = { x: 1, y: 1 };
         }
 
@@ -180,3 +174,5 @@
 </body>
 
 </html>
+
+{% endblock %}
