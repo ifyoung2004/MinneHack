@@ -1,0 +1,20 @@
+{% extends "minigameTemplate.html" %}
+
+{% block minigame %}
+<div class="box">
+    What did the baby robot call its creator?
+    <button class="answer" onclick="revealJoke()">What?</button><br>
+    <div class="joke" id="joke" hidden>
+        Da-ta
+    </div>
+</div>
+
+<script>
+    function revealJoke() {
+        var joke = document.getElementById("joke");
+        joke.hidden = false;
+        alert("Da-ta");
+        hideMinigame()
+    }
+</script>
+{% endblock %}
