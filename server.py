@@ -4,17 +4,43 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    options = [
-        {
-            "text": "Trigger Minigame",
-            "option": "minigame"
+    action = request.args.get("action", "start")
+    gamestates = {
+        "start": {
+            "character": "Character Name",
+            "quote": "Save my life?",
+            "options": [{
+                "text": "Trigger Minigame",
+                "option": "minigame"
+            },
+            {
+                "text": "Don't Trigger Minigame",
+                "option": "no"
+            }]
         },
-        {
-            "text": "Don't Trigger Minigame",
-            "option": ""
+        "no": {
+            "character": "Character Name",
+            "quote": "Are you sure?",
+            "options": [{
+                "text": "Don't want to",
+                "option": "done"
+            },
+            {
+                "text": "Changed my mind",
+                "option": "minigame"
+            }]
         },
-    ]
-    return render_template('chooseEvent.html', character="Character Name", quote="Do you want to play the minigame?", options=options) 
+        "done": {
+            "character": "Character Name",
+            "quote": "OK, sounds good"
+        }
+    }
+    print(action)
+
+    return render_template(
+        "main.html",
+        gamestate = gamestates[action]
+    )
 
 @app.route('/hi', methods=['GET'])
 def hello_world2():
@@ -28,6 +54,14 @@ def minigame():
 @app.route("/matchminigame")
 def matchminigame():
     return render_template('minigameMatch.html') 
+
+@app.route("/mazeminigame")
+def mazeminigame():
+    return render_template('minigameMaze.html') 
+
+@app.route("/popit")
+def popitminigame():
+    return render_template("minigamePopIt.html")
 
 @app.route("/success")
 def success():

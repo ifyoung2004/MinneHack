@@ -1,0 +1,171 @@
+{% extends "minigameTemplate.html" %}
+
+{% block minigame %}
+<style>
+    #marker, #target {
+        width: 65px;
+        height: 65px;
+        position: fixed;
+    }
+
+    #marker {
+        z-index: 1;
+    }
+</style>
+
+<div>Click on the key to match it with the lock!</div>
+<p id="score"></p>
+
+<img id="marker" src="/static/red_marker.png" />
+<img id="target" src="/static/yellow_circle.png" />
+
+<script>
+    const marker = document.querySelector("#marker");
+    const target = document.querySelector("#target");
+    const scoreElem = document.querySelector("#score");
+
+    let percent = 0;
+    let direction = 1;
+    let score = 0;
+    const targetScore = 10;
+
+    let targetAngle = 0;
+    let initialDistance = 0;
+    let gameOver = false;
+
+    scoreElem.innerHTML = `${score} / ${targetScore}`;
+
+
+    function normalizeAngle(angle) {
+        return (angle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+    }
+
+    function angleDifference(angle1, angle2) {
+        let distance = Math.abs(angle1 - angle2);
+        return Math.min(distance, 2 * Math.PI - distance);
+    }
+
+    function forwardDistance(from, to) {
+        return direction === 1
+            ? (to - from + 2 * Math.PI) % (2 * Math.PI)
+            : (from - to + 2 * Math.PI) % (2 * Math.PI);
+    }
+
+    function getCircleData() {
+        const usableWidth = window.innerWidth * 0.65;
+        const usableHeight = window.innerHeight * 0.7;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const radius = Math.min(usableWidth, usableHeight) / 2;
+        return { centerX, centerY, radius };
+    }
+
+    function positionFromAngle(angle) {
+        const { centerX, centerY, radius } = getCircleData();
+        return {
+            x: centerX + radius * Math.cos(angle),
+            y: centerY + radius * Math.sin(angle)
+        };
+    }
+
+
+    function placeTarget() {
+        const currentAngle = normalizeAngle(percent * 2 * Math.PI);
+        const progress = score / targetScore;
+
+
+        const max = Math.PI * (1 - progress);
+        const min = max * 0.7;
+        let distance = min + Math.random() * (max - min);
+
+        targetAngle = normalizeAngle(
+            direction === 1
+                ? currentAngle + distance
+                : currentAngle - distance
+        );
+
+        initialDistance = forwardDistance(currentAngle, targetAngle);
+
+        const pos = positionFromAngle(targetAngle);
+        target.style.left = pos.x + "px";
+        target.style.top = pos.y + "px";
+        target.style.transform = "translate(-50%, -50%);"
+    }
+
+    function triggerLoss() {
+        gameOver = true;
+        scoreElem.innerHTML = "Game Over — Click to Reset";
+    }
+
+    function resetGame() {
+        score = 0;
+        percent = 0;
+        direction = 1;
+        gameOver = false;
+        scoreElem.innerHTML = `${score} / ${targetScore}`;
+        placeTarget();
+    }
+
+    function detectPass(currentAngle) {
+        const { radius } = getCircleData();
+        const tolerance = ((65 / 2) / radius) * 1.25;
+
+        if (angleDifference(currentAngle, targetAngle) < tolerance) return;
+
+        const remaining = forwardDistance(currentAngle, targetAngle);
+
+        if (remaining > initialDistance) {
+            triggerLoss();
+        }
+    }
+
+    function animate() {
+        if (!gameOver) {
+            percent += direction * 0.003;
+            if (percent >= 1) percent -= 1;
+            if (percent < 0) percent += 1;
+
+            const angle = normalizeAngle(percent * 2 * Math.PI);
+            const pos = positionFromAngle(angle);
+
+            marker.style.left = pos.x + "px";
+            marker.style.top = pos.y + "px";
+           marker.style.transform =`rotate(${angle + Math.PI}rad)`;
+
+            detectPass(angle);
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("click", () => {
+        if (gameOver) {
+            resetGame();
+            return;
+        }
+
+        const angle = normalizeAngle(percent * 2 * Math.PI);
+        const { radius } = getCircleData();
+        const tolerance = ((65 / 2) / radius) * 1.5;
+
+        if (angleDifference(angle, targetAngle) < tolerance) {
+            score++;
+            scoreElem.innerHTML = `${score} / ${targetScore}`;
+            direction *= -1;
+
+            if (score === targetScore) {
+                scoreElem.innerHTML = "You Win!";
+                gameOver = true;
+            } else {
+                placeTarget();
+            }
+        } else {
+            triggerLoss();
+        }
+    });
+
+    placeTarget();
+    animate();
+</script>
+
+{% endblock %}
