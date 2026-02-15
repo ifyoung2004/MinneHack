@@ -3,10 +3,10 @@ function openPopup() {
   popup.style.display = "flex";
 }
 
-function openMaze() {
-  var popup = document.getElementById("mazePopup");
-  popup.style.display = "flex";
-}
+// function openMaze() {
+//   var popup = document.getElementById("mazePopup");
+//   popup.style.display = "flex";
+// }
 
 function closePopup() {
   var popup = document.getElementById("robotPopup");
@@ -18,11 +18,11 @@ function closeIntro() {
   popup.style.display = "none";
 }
 
-window.onclick = function(event) {
-  if (event.target == popup) {
-    closePopup();
-  }
-}
+// window.onclick = function(event) {
+//   if (event.target == popup) {
+//     closePopup();
+//   }
+// }
 
 
 
@@ -199,7 +199,7 @@ function openRobotPopup(robotId) {
   partsDiv.innerHTML = partsHTML;
 }
 
-function triggerMinigame(minigame) {
+async function triggerMinigame(minigame) {
   document.getElementById("minigame").classList.add("active");
   const template = document.getElementById(`${minigame}-template`);
   const clone = template.content.cloneNode(true);
