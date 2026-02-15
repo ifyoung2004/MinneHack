@@ -14,9 +14,10 @@ function dropHandler(ev) {
   ev.target.appendChild(document.getElementById(data));
   score++;
 
-  if (score == 4) {
+  if (score == 1) {
     
   alert("All robots reunited!!");
+  hideMinigame();
   }
 }
 

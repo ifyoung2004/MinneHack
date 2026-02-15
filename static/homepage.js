@@ -59,6 +59,15 @@ const robots = [
     computingPower: 80,
     parts: ["battery"],
     img: "./../static/robot_sad.png"
+  }, 
+  {
+    id: 5,
+    name: "Robot 5",
+    dialogue: "looks a little low energy... Maybe they need a new battery?",
+    energy: 30,
+    computingPower: 50,
+    parts: ["solar-panels", "water-filtration"],
+    img: "./../static/robot_sad.png"
   }
 ];
 
@@ -161,7 +170,7 @@ installBtn.addEventListener("click", async () => {
    MINIGAMES
 -------------------------- */
 
-const minigameList = ["hi", "maze", "popit", "match"];
+const minigameList = ["hi", "maze", "popit", "match", "val"];
 
 async function triggerMinigame(minigame) {
   const container = document.getElementById("minigame");
@@ -185,6 +194,12 @@ function hideMinigame(win = true) {
   }
 
   fixedRobots++;
+  console.log(fixedRobots);
+  if (fixedRobots == 5) {
+    
+    alert("You fixed all robots!");
+    document.getElementById("winText").hidden = false;
+  }
 
   const robot = robots.find(r => r.id === lastRobotId);
   robot.img = "static/robot_happy.png";
@@ -199,9 +214,7 @@ function hideMinigame(win = true) {
   clearSelection();
   openRobotPopup(lastRobotId);
 
-  if (fixedRobots >= robots.length) {
-    alert("You fixed all robots!");
-  }
+  
 }
 
 async function activateRandomMinigame() {
@@ -222,7 +235,8 @@ async function checkWinCondition() {
     (lastRobotId === 1 && lastPartName === "solar-panels") ||
     (lastRobotId === 2 && lastPartName === "water-filtration") ||
     (lastRobotId === 3 && lastPartName === "oxygen-processor") ||
-    (lastRobotId === 4 && lastPartName === "thermal-paste")
+    (lastRobotId === 4 && lastPartName === "thermal-paste") ||
+    (lastRobotId === 5 && lastPartName === "battery")
   ) {
     await activateRandomMinigame();
   } else {
