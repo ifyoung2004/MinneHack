@@ -55,6 +55,10 @@ def minigame():
 def matchminigame():
     return render_template('minigameMatch.html') 
 
+@app.route("/mazeminigame")
+def mazeminigame():
+    return render_template('minigameMaze.html') 
+
 @app.route("/success")
 def success():
     return render_template('success.html') 

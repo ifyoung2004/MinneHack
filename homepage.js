@@ -1,17 +1,23 @@
-// Get the modal element
-var popup = document.getElementById("myPopup");
-
-// Function to open the popup
 function openPopup() {
-  popup.style.display = "flex"; // Use 'flex' or 'block' to show
+  var popup = document.getElementById("robotPopup");
+  popup.style.display = "flex";
 }
 
-// Function to close the popup
+function openMaze() {
+  var popup = document.getElementById("mazePopup");
+  popup.style.display = "flex";
+}
+
 function closePopup() {
+  var popup = document.getElementById("robotPopup");
   popup.style.display = "none";
 }
 
-// Close the popup if the user clicks outside of the content area
+function closeIntro() {
+  var popup = document.getElementById("introPopup");
+  popup.style.display = "none";
+}
+
 window.onclick = function(event) {
   if (event.target == popup) {
     closePopup();

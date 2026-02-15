@@ -3,27 +3,78 @@
 <head>
   <link rel="stylesheet" href="homepage.css">
   <style>
-  .robot-button {
+  .robotButton1 {
     position: absolute;
     top: 200px;
     left: 200px;
+  }
+  .robotButton2 {
+    position: absolute;
+    top: 500px;
+    left: 200px;
+  }
+  .robotButton3 {
+    position: absolute;
+    top: 200px;
+    left: 500px;
+  }
+  .robotButton4 {
+    position: absolute;
+    top: 500px;
+    left: 500px;
+  }
+  .robotButton5 {
+    position: absolute;
+    top: 200px;
+    left: 800px;
   }
   </style>
   <title>Page Title</title>
 </head>
 <body>
 
-  <h1>This is a Heading</h1>
-  <p>This is a paragraph.</p>
-  <button class = "robot-button" onclick="openPopup()">
+  <h1>Robot Game :]</h1>
+
+  <button class = "robotButton1" onclick="openMaze()">
       <img src="images/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
   </button>
 
-  <div id="myPopup" class="popup">
+  <button class = "robotButton2" onclick="openPopup()">
+      <img src="images/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
+  </button>
+
+  <button class = "robotButton3" onclick="openPopup()">
+      <img src="images/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
+  </button>
+
+  <button class = "robotButton4" onclick="openPopup()">
+      <img src="images/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
+  </button>
+
+  <button class = "robotButton5" onclick="openPopup()">
+      <img src="images/robot-placeholder.png" alt="Robot" style="width:100px;height:100px;">
+  </button>
+
+  <div id="robotPopup" class="popup">
     <div class="popup-content">
       <span class="close" onclick="closePopup()">&times;</span>
       <h2>Popup Title</h2>
       <p>Some content in the popup.</p>
+    </div>
+  </div>
+
+  <div id="introPopup" class="intro">
+    <div class="popup-content">
+      <span class="close" onclick="closeIntro()">&times;</span>
+      <h2>Welcome!!!!!!</h2>
+      <p>Click on Robots and Stuff</p>
+    </div>
+  </div>
+
+  <div id="mazePopup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closeIntro()">&times;</span>
+      <h2>Maze</h2>
     </div>
   </div>
   
