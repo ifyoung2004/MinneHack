@@ -13,22 +13,6 @@
             width: 100%;
         }
     </style>
-    <script>
-        function trigger(option) {
-            console.log("triggered " + option);
-            if (option === "minigame") {
-                document.getElementById("minigame").classList.add("active");
-                const template = document.getElementById("minigame-template");
-                const clone = template.content.cloneNode(true);
-
-                const container = document.getElementById("minigame");
-                container.innerHTML = "";
-                container.appendChild(clone);
-            } else {
-                window.location.href = `/?action=${option}`
-            }
-        }
-    </script>
 </head>
 
 <body>

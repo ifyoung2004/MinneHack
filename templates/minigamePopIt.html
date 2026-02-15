@@ -2,12 +2,10 @@
 
 {% block minigame %}
 <style>
-    img {
-        width: 75px;
-        height: 75px;
-        position: absolute;
-        left: 0;
-        top: 0;
+    #marker, #target {
+        width: 65px;
+        height: 65px;
+        position: fixed;
     }
 
     #marker {
@@ -54,7 +52,7 @@
     }
 
     function getCircleData() {
-        const usableWidth = window.innerWidth * 0.8;
+        const usableWidth = window.innerWidth * 0.65;
         const usableHeight = window.innerHeight * 0.7;
         const centerX = window.innerWidth / 2;
         const centerY = window.innerHeight / 2;
@@ -91,6 +89,7 @@
         const pos = positionFromAngle(targetAngle);
         target.style.left = pos.x + "px";
         target.style.top = pos.y + "px";
+        target.style.transform = "translate(-50%, -50%);"
     }
 
     function triggerLoss() {
@@ -109,7 +108,7 @@
 
     function detectPass(currentAngle) {
         const { radius } = getCircleData();
-        const tolerance = ((75 / 2) / radius) * 1.25;
+        const tolerance = ((65 / 2) / radius) * 1.25;
 
         if (angleDifference(currentAngle, targetAngle) < tolerance) return;
 
@@ -122,7 +121,7 @@
 
     function animate() {
         if (!gameOver) {
-            percent += direction * 0.001;
+            percent += direction * 0.003;
             if (percent >= 1) percent -= 1;
             if (percent < 0) percent += 1;
 
@@ -131,7 +130,7 @@
 
             marker.style.left = pos.x + "px";
             marker.style.top = pos.y + "px";
-            marker.style.transform = `rotate(${angle + Math.PI}rad)`;
+           marker.style.transform =`rotate(${angle + Math.PI}rad)`;
 
             detectPass(angle);
         }
@@ -147,7 +146,7 @@
 
         const angle = normalizeAngle(percent * 2 * Math.PI);
         const { radius } = getCircleData();
-        const tolerance = ((75 / 2) / radius) * 1.5;
+        const tolerance = ((65 / 2) / radius) * 1.5;
 
         if (angleDifference(angle, targetAngle) < tolerance) {
             score++;
