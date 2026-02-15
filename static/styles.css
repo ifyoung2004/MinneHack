@@ -1,5 +1,72 @@
 body {
     background-color: black;
     color: white;
-    font-family: "Quicksand"
+    font-family: "Quicksand";
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+
+.profile {
+    background: rgb(28, 118, 117);
+    border: 3px solid rgb(15, 77, 76);
+    display: inline-flex;   
+    flex-direction: column; 
+    align-items: center;    
+    padding: 3px;
+    margin-bottom: 5px
+}
+
+.content-wrapper {
+    width: 85vw;
+}
+
+.container {
+    width: 100%;
+    text-align: center;
+    background: rgb(15, 77, 76);
+    padding: 5px;
+}
+
+.option {
+    background: rgb(22, 97, 96);
+    padding: 5px;
+    margin: 2px;
+}
+
+.option:hover {
+    background: rgb(28, 118, 117);
+}
+
+.profile-image {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+    align-items: left;
+}
+
+#minigame {
+    width: 65vw;
+    height: 70vh;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border: 3px solid white;
+    background-color: black;
+    padding: 5px;
+
+    display: none;
+    z-index: 1000;
+}
+
+#minigame.active {
+    display: block;
 }
