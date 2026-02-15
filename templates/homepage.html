@@ -30,7 +30,7 @@
     left: 800px;
   }
   </style>
-  <title>Page Title</title>
+  <title>ROBOTS</title>
 </head>
 <body>
 
@@ -123,13 +123,27 @@
     </div>
   </div>
 
-  <div id="mazePopup" class="popup">
+  <!-- <div id="mazePopup" class="popup">
     <div class="popup-content">
       <span class="close" onclick="closeIntro()">&times;</span>
       <h2>Maze</h2>
     </div>
-  </div>
+  </div> -->
+  <div id="minigame"></div>
   
+
+  <template id="match-template">
+    {% include "minigameMatch.html" %}
+  </template>
+  <template id="maze-template">
+    {% include "minigameMatch.html" %}
+  </template>
+  <template id="popit-template">
+    {% include "minigamePopit.html" %}
+  </template>
+  <template id="val-template">
+    {% include "minigameVal.html" %}
+  </template>
   <script src="./../static/homepage.js"></script>
 </body>
 </html>

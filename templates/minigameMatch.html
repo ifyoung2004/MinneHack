@@ -18,7 +18,7 @@
             document.querySelectorAll(`.${itemDiv[0]}`).forEach(e => e.remove());
             score++;
             if (score == items.length) {
-                window.location.replace("success");
+                hideMinigame()
             }
         }
         currentClass = itemDiv[0];

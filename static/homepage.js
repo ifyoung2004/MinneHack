@@ -199,31 +199,49 @@ function openRobotPopup(robotId) {
   partsDiv.innerHTML = partsHTML;
 }
 
+function triggerMinigame(minigame) {
+  document.getElementById("minigame").classList.add("active");
+  const template = document.getElementById(`${minigame}-template`);
+  const clone = template.content.cloneNode(true);
 
-function checkWinCondition() {
+  const container = document.getElementById("minigame");
+  container.innerHTML = "";
+  container.appendChild(clone);
+}
+
+function hideMinigame() {
+  document.getElementById("minigame").classList.remove("active");
+}
+
+async function checkWinCondition() {
     let fixedRobots = 0;
 
     if (robots.find(r => r.id === 1).parts.includes("solar-panels")) {
+      await triggerMinigame("hi");
       robots.find(r => r.id === 1).img = "./../static/robot_happy.png";
       openRobotPopup(currentRobotId);
       fixedRobots++;
     }
     if (robots.find(r => r.id === 2).parts.includes("water-filtration")) {
+      await triggerMinigame("val");
        fixedRobots++;
        robots.find(r => r.id === 2).img = "./../static/robot_happy.png";
       openRobotPopup(currentRobotId);
     }
     if (robots.find(r => r.id === 3).parts.includes("oxygen-processor")) {
+      await triggerMinigame("maze");
       fixedRobots++;
       robots.find(r => r.id === 3).img = "./../static/robot_happy.png";
       openRobotPopup(currentRobotId);
     }
     if (robots.find(r => r.id === 4).parts.includes("thermal-paste")) {
+      await triggerMinigame("popit");
       fixedRobots++;
       robots.find(r => r.id === 4).img = "./../static/robot_happy.png";
       openRobotPopup(currentRobotId);
     }
     if (robots.find(r => r.id === 5).parts.includes("battery")) {
+      await triggerMinigame("match");
       fixedRobots++;
       robots.find(r => r.id === 5).img = "./../static/robot_happy.png";
       openRobotPopup(currentRobotId);
